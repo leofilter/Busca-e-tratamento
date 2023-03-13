@@ -8,14 +8,14 @@ response = requests.get(url)
 if response.status_code == 200:
     data = response.json()
 
-    # Conectando ao banco de dados
+    # Conectando ao Banco de Dados
     conn = sqlite3.connect("nomes.db")
     c = conn.cursor()
 
     # Drop da tabela existente (se houver)
     c.execute("DROP TABLE IF EXISTS participants")
 
-    # Criando a tabela de participantes com os campos corretos
+    # Criando a tabela de participantes
     c.execute("""CREATE TABLE participants (
                     id INTEGER PRIMARY KEY,
                     OrganisationId TEXT,
@@ -24,7 +24,7 @@ if response.status_code == 200:
                     authorization_server_url TEXT
                 )""")
 
-    # Inserindo os dados de cada participante na tabela
+    # Inserindo os dados dos participantes na tabela
     for participant in data:
         # Verificando se o participante tem o atributo "CustomerFriendlyLogoUri"
         logo_url = participant.get("CustomerFriendlyLogoUri")
